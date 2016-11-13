@@ -21,7 +21,7 @@ module.exports = (robot) => {
     ['00 00 19 * * *', Train, '京王線', sendAttachmentTo('#time')],
   ];
   crontab.forEach(([field, action, opt, cb]) => {
-    new CronJob(field, Say, () => action(opt, cb)).start();
+    new CronJob(field, () => action(opt, Say, cb)).start();
   });
 
   const defaultTrainRoute = '京王線';
