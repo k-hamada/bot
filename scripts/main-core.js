@@ -17,8 +17,8 @@ module.exports = (robot) => {
 
   const crontab = [
     ['00 00 08 * * *', Forecast, '東京', sendTo('#time')],
-    ['00 55 08 * * *', Train, '京王線', sendAttachmentTo('#time')],
-    ['00 00 19 * * *', Train, '京王線', sendAttachmentTo('#time')],
+    ['00 55 08 * * 1-5', Train, '京王線', sendAttachmentTo('#time')],
+    ['00 00 19 * * 1-5', Train, '京王線', sendAttachmentTo('#time')],
   ];
   crontab.forEach(([field, action, opt, cb]) => {
     new CronJob(field, () => action(opt, Say, cb)).start();
