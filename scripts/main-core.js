@@ -4,6 +4,7 @@
 const CronJob = require('cron').CronJob;
 const Forecast = require('./lib/forecast');
 const Train = require('./lib/train');
+const WeekdayOnly = require('./helper/weekday_only');
 const Say = require('./say');
 
 module.exports = (robot) => {
@@ -17,8 +18,8 @@ module.exports = (robot) => {
 
   const crontab = [
     ['00 00 08 * * *', Forecast, '東京', sendTo('#time')],
-    ['00 55 08 * * 1-5', Train, '京王線', sendAttachmentTo('#time')],
-    ['00 00 19 * * 1-5', Train, '京王線', sendAttachmentTo('#time')],
+    ['00 55 08 * * 1-5', WeekdayOnly(Train), '京王線', sendAttachmentTo('#time')],
+    ['00 00 19 * * 1-5', WeekdayOnly(Train), '京王線', sendAttachmentTo('#time')],
   ];
   crontab.forEach(([field, action, opt, cb]) => {
     new CronJob(field, () => action(opt, Say, cb)).start();
